@@ -1,0 +1,991 @@
+{
+  "operation": "heartbeat",
+  "agentInfo": {
+    "agentManifest": {
+      "buildInfo": {
+        "compiler": "/usr/local/opt/ccache/libexec/c++",
+        "flags": " -std=c++11 -DOPENSSL_SUPPORT",
+        "revision": "8ddaea0798d3d012e5c77dfee799a8443e9b7079",
+        "timestamp": 1538161487,
+        "version": "0.6.0"
+      },
+      "bundles": [
+        {
+          "artifact": "minifi-expression-language-extensions",
+          "group": "org.apache.nifi.minifi",
+          "version": "0.6.0"
+        },
+        {
+          "artifact": "minifi-http-curl",
+          "group": "org.apache.nifi.minifi",
+          "version": "0.6.0"
+        },
+        {
+          "componentManifest": {
+            "processors": [
+              {
+                "propertyDescriptors": {
+                  "Authorized DN Pattern": {
+                    "defaultValue": ".*",
+                    "description": "A Regular Expression to apply against the Distinguished Name of incoming connections. If the Pattern does not match the DN, the connection will be refused.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Authorized DN Pattern",
+                    "required": false
+                  },
+                  "Base Path": {
+                    "defaultValue": "contentListener",
+                    "description": "Base path for incoming connections",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Base Path",
+                    "required": false
+                  },
+                  "HTTP Headers to receive as Attributes (Regex)": {
+                    "description": "Specifies the Regular Expression that determines the names of HTTP Headers that should be passed along as FlowFile attributes",
+                    "expressionLanguageScope": "NONE",
+                    "name": "HTTP Headers to receive as Attributes (Regex)",
+                    "required": false
+                  },
+                  "Listening Port": {
+                    "description": "The Port to listen on for incoming connections",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Listening Port",
+                    "required": false
+                  },
+                  "SSL Certificate": {
+                    "description": "File containing PEM-formatted file including TLS/SSL certificate and key",
+                    "expressionLanguageScope": "NONE",
+                    "name": "SSL Certificate",
+                    "required": false
+                  },
+                  "SSL Certificate Authority": {
+                    "description": "File containing trusted PEM-formatted certificates",
+                    "expressionLanguageScope": "NONE",
+                    "name": "SSL Certificate Authority",
+                    "required": false
+                  },
+                  "SSL Minimum Version": {
+                    "defaultValue": "SSL2",
+                    "description": "Minimum TLS/SSL version allowed (SSL2, SSL3, TLS1.0, TLS1.1, TLS1.2)",
+                    "expressionLanguageScope": "NONE",
+                    "name": "SSL Minimum Version",
+                    "required": false
+                  },
+                  "SSL Verify Peer": {
+                    "defaultValue": "no",
+                    "description": "Whether or not to verify the client's certificate (yes/no)",
+                    "expressionLanguageScope": "NONE",
+                    "name": "SSL Verify Peer",
+                    "required": false
+                  }
+                },
+                "supportedRelationships": [
+                  {
+                    "description": "All files are routed to success",
+                    "name": "success"
+                  }
+                ],
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.processors.ListenHTTP",
+                "typeDescription": "Starts an HTTP Server and listens on a given base path to transform incoming\nrequests into FlowFiles. The default URI of the Service will be\n`http://{hostname}:{port}/contentListener`. Only HEAD, POST, and GET requests are\nsupported. PUT, and DELETE will result in an error and the HTTP response\nstatus code 405.\n\nThe response body text for all requests, by default, is empty (length of 0). A\nstatic response body can be set for a given URI by sending input files to\nListenHTTP with the `http.type` attribute set to `response_body`. The response\nbody FlowFile `filename` attribute is appended to the `Base Path` property\n(separated by a `/`) when mapped to incoming requests. The `mime.type`\nattribute of the response body FlowFile is used for the `Content-type` header\nin responses. Response body content can be cleared by sending an empty (size 0)\nFlowFile for a given URI mapping."
+              }
+            ]
+          },
+          "artifact": "minifi-civet-extensions",
+          "group": "org.apache.nifi.minifi",
+          "version": "0.6.0"
+        },
+        {
+          "artifact": "minifi-rocksdb-repos",
+          "group": "org.apache.nifi.minifi",
+          "version": "0.6.0"
+        },
+        {
+          "artifact": "minifi-archive-extensions",
+          "group": "org.apache.nifi.minifi",
+          "version": "0.6.0"
+        },
+        {
+          "artifact": "minifi-script-extensions",
+          "group": "org.apache.nifi.minifi",
+          "version": "0.6.0"
+        },
+        {
+          "componentManifest": {
+            "controllerServices": [
+              {
+                "propertyDescriptors": {
+                  "Battery Capacity Path": {
+                    "description": "Path to the battery level",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Battery Capacity Path",
+                    "required": false
+                  },
+                  "Battery Status Path": {
+                    "description": "Path to the battery status ( Discharging/Battery )",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Battery Status Path",
+                    "required": false
+                  },
+                  "Low Battery Threshold": {
+                    "description": "Battery threshold before which we will aggressively reduce",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Low Battery Threshold",
+                    "required": false
+                  },
+                  "Trigger Threshold": {
+                    "description": "Battery threshold before which we consider a slow reduction",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Trigger Threshold",
+                    "required": false
+                  },
+                  "Wait Period": {
+                    "description": "Decay between checking threshold and determining if a reduction is needed",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Wait Period",
+                    "required": false
+                  }
+                },
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.controllers.LinuxPowerManagerService"
+              },
+              {
+                "propertyDescriptors": {
+                  "Default Prioritizer": {
+                    "description": "Sets this controller service as the default prioritizer for all comms",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Default Prioritizer",
+                    "required": false
+                  },
+                  "Max Payload": {
+                    "description": "Maximum payload for these network controllers",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Max Payload",
+                    "required": false
+                  },
+                  "Max Throughput": {
+                    "description": "Max throughput for these network controllers",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Max Throughput",
+                    "required": false
+                  },
+                  "Network Controllers": {
+                    "description": "Network controllers in order of priority for this prioritizer",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Network Controllers",
+                    "required": false
+                  },
+                  "Verify Interfaces": {
+                    "defaultValue": "true",
+                    "description": "Verify that interfaces are operational",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Verify Interfaces",
+                    "required": false
+                  }
+                },
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.controllers.NetworkPrioritizerService"
+              },
+              {
+                "propertyDescriptors": {
+                  "CA Certificate": {
+                    "description": "CA certificate file",
+                    "expressionLanguageScope": "NONE",
+                    "name": "CA Certificate",
+                    "required": false
+                  },
+                  "Client Certificate": {
+                    "description": "Client Certificate",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Client Certificate",
+                    "required": false
+                  },
+                  "Passphrase": {
+                    "description": "Client passphrase. Either a file or unencrypted text",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Passphrase",
+                    "required": false
+                  },
+                  "Private Key": {
+                    "description": "Private Key file",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Private Key",
+                    "required": false
+                  }
+                },
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.controllers.SSLContextService"
+              },
+              {
+                "propertyDescriptors": {
+                  "Allow All Properties": {
+                    "defaultValue": "false",
+                    "description": "Allows all properties, which are also not disallowed, to be updated",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Allow All Properties",
+                    "required": false
+                  },
+                  "Allowed Properties": {
+                    "description": "Properties for which we will allow updates",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Allowed Properties",
+                    "required": false
+                  },
+                  "Disallowed Properties": {
+                    "description": "Properties for which we will not allow updates",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Disallowed Properties",
+                    "required": false
+                  },
+                  "Persist Updates": {
+                    "description": "Property that dictates whether updates should persist after a restart",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Persist Updates",
+                    "required": false
+                  }
+                },
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.controllers.UpdatePolicyControllerService"
+              }
+            ],
+            "processors": [
+              {
+                "propertyDescriptors": {
+                  "Hostname Attribute": {
+                    "defaultValue": "source.hostname",
+                    "description": "Flowfile attribute to used to record the agent's hostname",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Hostname Attribute",
+                    "required": false
+                  },
+                  "IP Attribute": {
+                    "defaultValue": "source.ipv4",
+                    "description": "Flowfile attribute to used to record the agent's IP address",
+                    "expressionLanguageScope": "NONE",
+                    "name": "IP Attribute",
+                    "required": false
+                  },
+                  "Network Interface Name": {
+                    "defaultValue": "eth0",
+                    "description": "Network interface from which to read an IP v4 address",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Network Interface Name",
+                    "required": false
+                  }
+                },
+                "supportedRelationships": [
+                  {
+                    "description": "success operational on the flow record",
+                    "name": "success"
+                  }
+                ],
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.processors.AppendHostInfo",
+                "typeDescription": "Appends host information such as IP address and hostname  as an attribute to\nincoming flowfiles."
+              },
+              {
+                "propertyDescriptors": {
+                  "Batch Duration": {
+                    "defaultValue": "0",
+                    "description": "If the process is expected to be long-running and produce textual output, a batch duration can be specified.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Batch Duration",
+                    "required": false
+                  },
+                  "Command": {
+                    "description": "Specifies the command to be executed; if just the name of an executable is provided, it must be in the user's environment PATH.",
+                    "expressionLanguageScope": "FLOWFILE_ATTRIBUTES",
+                    "name": "Command",
+                    "required": false
+                  },
+                  "Command Arguments": {
+                    "description": "The arguments to supply to the executable delimited by white space. White space can be escaped by enclosing it in double-quotes.",
+                    "expressionLanguageScope": "FLOWFILE_ATTRIBUTES",
+                    "name": "Command Arguments",
+                    "required": false
+                  },
+                  "Redirect Error Stream": {
+                    "defaultValue": "false",
+                    "description": "If true will redirect any error stream output of the process to the output stream.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Redirect Error Stream",
+                    "required": false
+                  },
+                  "Working Directory": {
+                    "description": "The directory to use as the current working directory when executing the command",
+                    "expressionLanguageScope": "FLOWFILE_ATTRIBUTES",
+                    "name": "Working Directory",
+                    "required": false
+                  }
+                },
+                "supportedRelationships": [
+                  {
+                    "description": "All created FlowFiles are routed to this relationship.",
+                    "name": "success"
+                  }
+                ],
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.processors.ExecuteProcess",
+                "typeDescription": "Runs an operating system command specified by the user and writes the output of\nthat command to a FlowFile. If the command is expected to be long-running, the\nProcessor can output the partial data on a specified interval. When this option\nis used, the output is expected to be in textual format, as it typically does\nnot make sense to split binary data on arbitrary time-based intervals."
+              },
+              {
+                "propertyDescriptors": {
+                  "Attribute": {
+                    "description": "Attribute to set from content",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Attribute",
+                    "required": false
+                  }
+                },
+                "supportedRelationships": [
+                  {
+                    "description": "success operational on the flow record",
+                    "name": "success"
+                  }
+                ],
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.processors.ExtractText"
+              },
+              {
+                "propertyDescriptors": {
+                  "Batch Size": {
+                    "defaultValue": "1",
+                    "description": "The number of FlowFiles to be transferred in each invocation",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Batch Size",
+                    "required": false
+                  },
+                  "Data Format": {
+                    "defaultValue": "Binary",
+                    "description": "Specifies whether the data should be Text or Binary",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Data Format",
+                    "required": false
+                  },
+                  "File Size": {
+                    "defaultValue": "1 kB",
+                    "description": "The size of the file that will be used",
+                    "expressionLanguageScope": "NONE",
+                    "name": "File Size",
+                    "required": false
+                  },
+                  "Unique FlowFiles": {
+                    "defaultValue": "true",
+                    "description": "If true, each FlowFile that is generated will be unique. If false, a random value will be generated and all FlowFiles",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Unique FlowFiles",
+                    "required": false
+                  }
+                },
+                "supportedRelationships": [
+                  {
+                    "description": "success operational on the flow record",
+                    "name": "success"
+                  }
+                ],
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.processors.GenerateFlowFile",
+                "typeDescription": "This processor creates FlowFiles with random data or custom content.\nGenerateFlowFile is useful for load testing, configuration, and simulation."
+              },
+              {
+                "propertyDescriptors": {
+                  "Batch Size": {
+                    "defaultValue": "10",
+                    "description": "The maximum number of files to pull in each iteration",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Batch Size",
+                    "required": false
+                  },
+                  "File Filter": {
+                    "defaultValue": "[^\\.].*",
+                    "description": "Only files whose names match the given regular expression will be picked up",
+                    "expressionLanguageScope": "NONE",
+                    "name": "File Filter",
+                    "required": false
+                  },
+                  "Ignore Hidden Files": {
+                    "defaultValue": "true",
+                    "description": "Indicates whether or not hidden files should be ignored",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Ignore Hidden Files",
+                    "required": false
+                  },
+                  "Input Directory": {
+                    "defaultValue": ".",
+                    "description": "The input directory from which to pull files",
+                    "expressionLanguageScope": "FLOWFILE_ATTRIBUTES",
+                    "name": "Input Directory",
+                    "required": true
+                  },
+                  "Keep Source File": {
+                    "defaultValue": "false",
+                    "description": "If true, the file is not deleted after it has been copied to the Content Repository",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Keep Source File",
+                    "required": false
+                  },
+                  "Maximum File Age": {
+                    "defaultValue": "0 sec",
+                    "description": "The minimum age that a file must be in order to be pulled; any file younger than this amount of time (according to last modification date) will be ignored",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Maximum File Age",
+                    "required": false
+                  },
+                  "Maximum File Size": {
+                    "defaultValue": "0 B",
+                    "description": "The maximum size that a file can be in order to be pulled",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Maximum File Size",
+                    "required": false
+                  },
+                  "Minimum File Age": {
+                    "defaultValue": "0 sec",
+                    "description": "The maximum age that a file must be in order to be pulled; any fileolder than this amount of time (according to last modification date) will be ignored",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Minimum File Age",
+                    "required": false
+                  },
+                  "Minimum File Size": {
+                    "defaultValue": "0 B",
+                    "description": "The minimum size that a file must be in order to be pulled",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Minimum File Size",
+                    "required": false
+                  },
+                  "Polling Interval": {
+                    "defaultValue": "0 sec",
+                    "description": "Indicates how long to wait before performing a directory listing",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Polling Interval",
+                    "required": false
+                  },
+                  "Recurse Subdirectories": {
+                    "defaultValue": "true",
+                    "description": "Indicates whether or not to pull files from subdirectories",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Recurse Subdirectories",
+                    "required": false
+                  }
+                },
+                "supportedRelationships": [
+                  {
+                    "description": "All files are routed to success",
+                    "name": "success"
+                  }
+                ],
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.processors.GetFile",
+                "typeDescription": "Creates FlowFiles from files in a directory. NiFi will ignore files it doesn't\nhave at least read permissions for."
+              },
+              {
+                "propertyDescriptors": {
+                  "SSL Context Service": {
+                    "description": "SSL Context Service Name",
+                    "expressionLanguageScope": "NONE",
+                    "name": "SSL Context Service",
+                    "required": false
+                  },
+                  "Stay Connected": {
+                    "defaultValue": "true",
+                    "description": "Determines if we keep the same socket despite having no data",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Stay Connected",
+                    "required": false
+                  },
+                  "concurrent-handler-count": {
+                    "defaultValue": "1",
+                    "description": "Number of concurrent handlers for this session",
+                    "expressionLanguageScope": "NONE",
+                    "name": "concurrent-handler-count",
+                    "required": false
+                  },
+                  "connection-attempt-timeout": {
+                    "defaultValue": "3",
+                    "description": "Maximum number of connection attempts before attempting backup hosts, if configured.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "connection-attempt-timeout",
+                    "required": false
+                  },
+                  "end-of-message-byte": {
+                    "defaultValue": "13",
+                    "description": "Byte value which denotes end of message. Must be specified as integer within the valid byte range  (-128 thru 127). For example, '13' = Carriage return and '10' = New line. Default '13'.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "end-of-message-byte",
+                    "required": false
+                  },
+                  "endpoint-list": {
+                    "description": "A comma delimited list of the endpoints to connect to. The format should be <server_address>:<port>.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "endpoint-list",
+                    "required": false
+                  },
+                  "receive-buffer-size": {
+                    "defaultValue": "16MB",
+                    "description": "The size of the buffer to receive data in. Default 16384 (16MB).",
+                    "expressionLanguageScope": "NONE",
+                    "name": "receive-buffer-size",
+                    "required": false
+                  }
+                },
+                "supportedRelationships": [
+                  {
+                    "description": "Indicates an incomplete message as a result of encountering the end of message byte trigger",
+                    "name": "partial"
+                  },
+                  {
+                    "description": "All files are routed to success",
+                    "name": "success"
+                  }
+                ],
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.processors.GetTCP"
+              },
+              {
+                "propertyDescriptors": {
+                  "Always Output Response": {
+                    "defaultValue": "false",
+                    "description": "Will force a response FlowFile to be generated and routed to the 'Response' relationship regardless of what the server status code received is ",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Always Output Response",
+                    "required": false
+                  },
+                  "Attributes to Send": {
+                    "description": "Regular expression that defines which attributes to send as HTTP headers in the request. If not defined, no attributes are sent as headers.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Attributes to Send",
+                    "required": false
+                  },
+                  "Connection Timeout": {
+                    "defaultValue": "5 secs",
+                    "description": "Max wait time for connection to remote service.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Connection Timeout",
+                    "required": false
+                  },
+                  "Content-type": {
+                    "defaultValue": "application/octet-stream",
+                    "description": "The Content-Type to specify for when content is being transmitted through a PUT, POST or PATCH. In the case of an empty value after evaluating an expression language expression, Content-Type defaults to",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Content-type",
+                    "required": false
+                  },
+                  "Disable Peer Verification": {
+                    "defaultValue": "false",
+                    "description": "Disables peer verification for the SSL session",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Disable Peer Verification",
+                    "required": false
+                  },
+                  "HTTP Method": {
+                    "defaultValue": "GET",
+                    "description": "HTTP request method (GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS). Arbitrary methods are also supported. Methods other than POST, PUT and PATCH will be sent without a message body.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "HTTP Method",
+                    "required": false
+                  },
+                  "Include Date Header": {
+                    "defaultValue": "True",
+                    "description": "Include an RFC-2616 Date header in the request.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Include Date Header",
+                    "required": false
+                  },
+                  "Proxy Host": {
+                    "description": "The fully qualified hostname or IP address of the proxy server",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Proxy Host",
+                    "required": false
+                  },
+                  "Proxy Port": {
+                    "description": "The port of the proxy server",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Proxy Port",
+                    "required": false
+                  },
+                  "Read Timeout": {
+                    "defaultValue": "15 secs",
+                    "description": "Max wait time for response from remote service.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Read Timeout",
+                    "required": false
+                  },
+                  "Remote URL": {
+                    "description": "Remote URL which will be connected to, including scheme, host, port, path.",
+                    "expressionLanguageScope": "FLOWFILE_ATTRIBUTES",
+                    "name": "Remote URL",
+                    "required": false
+                  },
+                  "SSL Context Service": {
+                    "exclusiveOfProperties": {
+                      "Remote URL": "^http:.*$"
+                    },
+                    "typeProvidedByValue": {
+                      "artifact": "minifi-system",
+                      "group": "org.apache.nifi.minifi",
+                      "type": "org.apache.nifi.minifi.controllers.SSLContextService"
+                    },
+                    "description": "The SSL Context Service used to provide client certificate information for TLS/SSL (https) connections.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "SSL Context Service",
+                    "required": false
+                  },
+                  "Use Chunked Encoding": {
+                    "defaultValue": "false",
+                    "description": "When POST'ing, PUT'ing or PATCH'ing content set this property to true in order to not pass the 'Content-length' header and instead send 'Transfer-Encoding' with a value of 'chunked'. This will enable the data transfer mechanism which was introduced in HTTP 1.1 to pass data of unknown lengths in chunks.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Use Chunked Encoding",
+                    "required": false
+                  },
+                  "invokehttp-proxy-password": {
+                    "description": "Password to set when authenticating against proxy",
+                    "displayName": "Proxy Password",
+                    "expressionLanguageScope": "NONE",
+                    "name": "invokehttp-proxy-password",
+                    "required": false
+                  },
+                  "invokehttp-proxy-user": {
+                    "description": "Username to set when authenticating against proxy",
+                    "expressionLanguageScope": "NONE",
+                    "name": "invokehttp-proxy-user",
+                    "required": false
+                  },
+                  "send-message-body": {
+                    "defaultValue": "true",
+                    "description": "If true, sends the HTTP message body on POST/PUT/PATCH requests (default).  If false, suppresses the message body and content-type header for these requests.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "send-message-body",
+                    "required": false
+                  }
+                },
+                "supportedRelationships": [
+                  {
+                    "description": "All files are routed to success",
+                    "name": "success"
+                  }
+                ],
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.processors.InvokeHTTP",
+                "typeDescription": "An HTTP client processor which can interact with a configurable HTTP Endpoint.\nThe destination URL and HTTP Method are configurable. FlowFile attributes are\nconverted to HTTP headers and the FlowFile contents are included as the body of\nthe request (if the HTTP Method is PUT, POST or PATCH)."
+              },
+              {
+                "propertyDescriptors": {
+                  "Max Batch Size": {
+                    "defaultValue": "1",
+                    "description": "The maximum number of Syslog events to add to a single FlowFile.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Max Batch Size",
+                    "required": false
+                  },
+                  "Max Number of TCP Connections": {
+                    "defaultValue": "2",
+                    "description": "The maximum number of concurrent connections to accept Syslog messages in TCP mode.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Max Number of TCP Connections",
+                    "required": false
+                  },
+                  "Max Size of Socket Buffer": {
+                    "defaultValue": "1 MB",
+                    "description": "The maximum size of the socket buffer that should be used.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Max Size of Socket Buffer",
+                    "required": false
+                  },
+                  "Message Delimiter": {
+                    "defaultValue": "\n",
+                    "description": "Specifies the delimiter to place between Syslog messages when multiple messages are bundled together (see <Max Batch Size> core::Property).",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Message Delimiter",
+                    "required": false
+                  },
+                  "Parse Messages": {
+                    "defaultValue": "false",
+                    "description": "Indicates if the processor should parse the Syslog messages. If set to false, each outgoing FlowFile will only.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Parse Messages",
+                    "required": false
+                  },
+                  "Port": {
+                    "defaultValue": "514",
+                    "description": "The port for Syslog communication.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Port",
+                    "required": false
+                  },
+                  "Protocol": {
+                    "defaultValue": "UDP",
+                    "description": "The protocol for Syslog communication.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Protocol",
+                    "required": false
+                  },
+                  "Receive Buffer Size": {
+                    "defaultValue": "65507 B",
+                    "description": "The size of each buffer used to receive Syslog messages.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Receive Buffer Size",
+                    "required": false
+                  }
+                },
+                "supportedRelationships": [
+                  {
+                    "description": "SysLog message format invalid",
+                    "name": "invalid"
+                  },
+                  {
+                    "description": "All files are routed to success",
+                    "name": "success"
+                  }
+                ],
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.processors.ListenSyslog",
+                "typeDescription": "Listens for Syslog messages being sent to a given port over TCP or UDP.\nIncoming messages are checked against regular expressions for RFC5424 and\nRFC3164 formatted messages. The format of each message is:\n(\\<PRIORITY\\>)(VERSION )(TIMESTAMP) (HOSTNAME) (BODY) where version is\noptional. The timestamp can be an RFC5424 timestamp with a format of\n\"yyyy-MM-dd'T'HH:mm:ss.SZ\" or \"yyyy-MM-dd'T'HH:mm:ss.S+hh:mm\", or it can be an\nRFC3164 timestamp with a format of \"MMM d HH:mm:ss\". If an incoming messages\nmatches one of these patterns, the message will be parsed and the individual\npieces will be placed in FlowFile attributes, with the original message in the\ncontent of the FlowFile. If an incoming message does not match one of these\npatterns it will not be parsed and the syslog.valid attribute will be set to\nfalse with the original message in the content of the FlowFile. Valid messages\nwill be transferred on the success relationship, and invalid messages will be\ntransferred on the invalid relationship."
+              },
+              {
+                "propertyDescriptors": {
+                  "Attributes to Ignore": {
+                    "description": "A comma-separated list of Attributes to ignore. If not specified, no attributes will be ignored.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Attributes to Ignore",
+                    "required": false
+                  },
+                  "Attributes to Log": {
+                    "description": "A comma-separated list of Attributes to Log. If not specified, all attributes will be logged.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Attributes to Log",
+                    "required": false
+                  },
+                  "Log Level": {
+                    "defaultValue": "info",
+                    "description": "The Log Level to use when logging the Attributes",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Log Level",
+                    "required": false
+                  },
+                  "Log Payload": {
+                    "defaultValue": "false",
+                    "description": "If true, the FlowFile's payload will be logged, in addition to its attributes;otherwise, just the Attributes will be logged.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Log Payload",
+                    "required": false
+                  },
+                  "Log prefix": {
+                    "description": "Log prefix appended to the log lines. It helps to distinguish the output of multiple LogAttribute processors.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Log prefix",
+                    "required": false
+                  }
+                },
+                "supportedRelationships": [
+                  {
+                    "description": "success operational on the flow record",
+                    "name": "success"
+                  }
+                ],
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.processors.LogAttribute",
+                "typeDescription": "Logs attributes of flow files in the MiNiFi application log."
+              },
+              {
+                "propertyDescriptors": {
+                  "Conflict Resolution Strategy": {
+                    "defaultValue": "fail",
+                    "description": "Indicates what should happen when a file with the same name already exists in the output directory",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Conflict Resolution Strategy",
+                    "required": false
+                  },
+                  "Create Missing Directories": {
+                    "dependentProperties": [
+                      "Directory"
+                    ],
+                    "defaultValue": "true",
+                    "description": "If true, then missing destination directories will be created. If false, flowfiles are penalized and sent to failure.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Create Missing Directories",
+                    "required": true
+                  },
+                  "Directory": {
+                    "defaultValue": ".",
+                    "description": "The output directory to which to put files",
+                    "expressionLanguageScope": "FLOWFILE_ATTRIBUTES",
+                    "name": "Directory",
+                    "required": false
+                  },
+                  "Maximum File Count": {
+                    "defaultValue": "-1",
+                    "description": "Specifies the maximum number of files that can exist in the output directory",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Maximum File Count",
+                    "required": false
+                  }
+                },
+                "supportedRelationships": [
+                  {
+                    "description": "Failed files (conflict, write failure, etc.) are transferred to failure",
+                    "name": "failure"
+                  },
+                  {
+                    "description": "All files are routed to success",
+                    "name": "success"
+                  }
+                ],
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.processors.PutFile",
+                "typeDescription": "Writes the contents of a FlowFile to the local file system"
+              },
+              {
+                "supportsDynamicProperties": true,
+                "supportsDynamicRelationships": true,
+                "type": "org.apache.nifi.minifi.processors.RouteOnAttribute",
+                "typeDescription": "Routes FlowFiles based on their Attributes using the Attribute Expression Language."
+              },
+              {
+                "propertyDescriptors": {
+                  "File to Tail": {
+                    "description": "Fully-qualified filename of the file that should be tailed",
+                    "expressionLanguageScope": "NONE",
+                    "name": "File to Tail",
+                    "required": false
+                  },
+                  "Input Delimiter": {
+                    "description": "Specifies the character that should be used for delimiting the data being tailedfrom the incoming file.",
+                    "expressionLanguageScope": "NONE",
+                    "name": "Input Delimiter",
+                    "required": false
+                  },
+                  "State File": {
+                    "defaultValue": "TailFileState",
+                    "description": "Specifies the file that should be used for storing state about what data has been ingested so that upon restart NiFi can resume from where it left off",
+                    "expressionLanguageScope": "NONE",
+                    "name": "State File",
+                    "required": false
+                  }
+                },
+                "supportedRelationships": [
+                  {
+                    "description": "All files are routed to success",
+                    "name": "success"
+                  }
+                ],
+                "supportsDynamicProperties": false,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.processors.TailFile",
+                "typeDescription": "\"Tails\" a file, or a list of files, ingesting data from the file as it is\nwritten to the file. The file is expected to be textual. Data is ingested only\nwhen a new line is encountered (carriage return or new-line character or\ncombination). If the file to tail is periodically \"rolled over\", as is\ngenerally the case with log files, an optional Rolling Filename Pattern can be\nused to retrieve data from files that have rolled over, even if the rollover\noccurred while NiFi was not running (provided that the data still exists upon\nrestart of NiFi). It is generally advisable to set the Run Schedule to a few\nseconds, rather than running with the default value of 0 secs, as this\nProcessor will consume a lot of resources if scheduled very aggressively. At\nthis time, this Processor does not support ingesting files that have been\ncompressed when 'rolled over'."
+              },
+              {
+                "supportedRelationships": [
+                  {
+                    "description": "Failed files are transferred to failure",
+                    "name": "failure"
+                  },
+                  {
+                    "description": "All files are routed to success",
+                    "name": "success"
+                  }
+                ],
+                "supportsDynamicProperties": true,
+                "supportsDynamicRelationships": false,
+                "type": "org.apache.nifi.minifi.processors.UpdateAttribute"
+              }
+            ]
+          },
+          "artifact": "minifi-system",
+          "group": "org.apache.nifi.minifi",
+          "version": "0.6.0"
+        }
+      ],
+      "schedulingDefaults": {
+        "defaultMaxConcurrentTasks": 1,
+        "defaultRunDurationNanos": 0,
+        "defaultSchedulingPeriodMillis": 1000,
+        "defaultSchedulingStrategy": "TIMER_DRIVEN",
+        "penalizationPeriodMillis": 30000,
+        "yieldDurationMillis": 1000
+      },
+      "agentType": "cpp",
+      "identifier": "dockertesting"
+    },
+    "status": {
+      "components": {
+        "FlowController": {
+          "running": true
+        },
+        "LogAttribute": {
+          "running": true
+        },
+        "invoke": {
+          "running": true
+        }
+      },
+      "repositories": {
+        "ff": {
+          "size": 0
+        },
+        "repo_name": {
+          "size": 0
+        }
+      },
+      "uptime": 1425
+    },
+    "agentClass": "default",
+    "identifier": "125225c6-c348-11ed-9e2e-03d5905ded96"
+  },
+  "deviceInfo": {
+    "networkInfo": {
+      "hostname": "HW12151",
+      "ipAddress": "10.200.31.9"
+    },
+    "systemInfo": {
+      "machinearch": "x86_64",
+      "physicalMem": 17179869184,
+      "vCores": "8"
+    },
+    "identifier": "17351833171120873589"
+  },
+  "flowInfo": {
+    "components": {
+      "FlowController": {
+        "running": true
+      },
+      "LogAttribute": {
+        "running": true
+      },
+      "invoke": {
+        "running": true
+      }
+    },
+    "queues": {
+      "TransferFilesToRPG": {
+        "dataSize": 0,
+        "dataSizeMax": 1048576,
+        "size": 0,
+        "sizeMax": 0
+      },
+      "TransferFilesToRPG2": {
+        "dataSize": 0,
+        "dataSizeMax": 1048576,
+        "size": 0,
+        "sizeMax": 0
+      }
+    },
+    "versionedFlowSnapshotURI": {
+      "bucketId": "default",
+      "flowId": "1251db52-3ba8-19df-9e2c-03d5905ded96"
+    },
+    "flowId": "1251db52-3ba8-19df-9e2c-03d5905ded96"
+  }
+}

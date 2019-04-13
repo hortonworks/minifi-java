@@ -1,0 +1,119 @@
+{
+  "operation": "heartbeat",
+  "agentInfo": {
+    "agentManifest": {
+      "buildInfo": {
+        "compiler": "/usr/local/opt/ccache/libexec/c++",
+        "flags": " -std=c++11 -DOPENSSL_SUPPORT",
+        "revision": "8ddaea0798d3d012e5c77dfee799a8443e9b7079",
+        "timestamp": 1538161487,
+        "version": "0.6.0"
+      },
+      "bundles": [
+        {
+          "artifact": "minifi-expression-language-extensions",
+          "group": "org.apache.nifi.minifi",
+          "version": "0.6.0"
+        },
+        {
+          "artifact": "minifi-http-curl",
+          "group": "org.apache.nifi.minifi",
+          "version": "0.6.0"
+        },
+        {
+          "artifact": "minifi-rocksdb-repos",
+          "group": "org.apache.nifi.minifi",
+          "version": "0.6.0"
+        },
+        {
+          "artifact": "minifi-archive-extensions",
+          "group": "org.apache.nifi.minifi",
+          "version": "0.6.0"
+        },
+        {
+          "artifact": "minifi-script-extensions",
+          "group": "org.apache.nifi.minifi",
+          "version": "0.6.0"
+        }
+      ],
+      "schedulingDefaults": {
+        "defaultMaxConcurrentTasks": 1,
+        "defaultRunDurationNanos": 0,
+        "defaultSchedulingPeriodMillis": 1000,
+        "defaultSchedulingStrategy": "TIMER_DRIVEN",
+        "penalizationPeriodMillis": 30000,
+        "yieldDurationMillis": 1000
+      },
+      "agentType": "cpp",
+      "identifier": "dockertesting"
+    },
+    "status": {
+      "components": {
+        "FlowController": {
+          "running": true
+        },
+        "LogAttribute": {
+          "running": true
+        },
+        "invoke": {
+          "running": true
+        }
+      },
+      "repositories": {
+        "ff": {
+          "size": 0
+        },
+        "repo_name": {
+          "size": 0
+        }
+      },
+      "uptime": 1425
+    },
+    "agentClass": "default",
+    "identifier": "125225c6-c348-11ed-9e2e-03d5905ded96"
+  },
+  "deviceInfo": {
+    "networkInfo": {
+      "hostname": "HW12151",
+      "ipAddress": "10.200.31.9"
+    },
+    "systemInfo": {
+      "machinearch": "x86_64",
+      "physicalMem": 17179869184,
+      "vCores": "8"
+    },
+    "identifier": "17351833171120873589"
+  },
+  "flowInfo": {
+    "components": {
+      "FlowController": {
+        "running": true
+      },
+      "LogAttribute": {
+        "running": true
+      },
+      "invoke": {
+        "running": true
+      }
+    },
+    "queues": {
+      "TransferFilesToRPG": {
+        "dataSize": 0,
+        "dataSizeMax": 1048576,
+        "size": 0,
+        "sizeMax": 0
+      },
+      "TransferFilesToRPG2": {
+        "dataSize": 0,
+        "dataSizeMax": 1048576,
+        "size": 0,
+        "sizeMax": 0
+      }
+    },
+    "versionedFlowSnapshotURI": {
+      "bucketId": "default",
+      "flowId": "1251db52-3ba8-19df-9e2c-03d5905ded96"
+    },
+    "flowId": "1251db52-3ba8-19df-9e2c-03d5905ded96"
+  }
+}
